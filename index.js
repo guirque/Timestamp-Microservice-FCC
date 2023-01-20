@@ -23,6 +23,27 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+//For when a date is not provided.
+app.get('/api', async function(req, res)
+{
+  try
+  {
+    console.log(`-> Current Date Returned`);
+    dateObj = new Date();
+    res.json(
+      {
+        unix: Date.parse(dateObj),
+        utc: dateObj.toUTCString()
+      });
+  }
+  catch(error)
+  {
+    console.log(`An error ocurred: ${error}`);
+    res.status(400).json({msg: 'error'});
+  }
+});
+
+//For when a date is provided.
 app.get('/api/:date', async function(req, res)
 {
   try
@@ -33,7 +54,6 @@ app.get('/api/:date', async function(req, res)
 
     let dateObj;
     
-    //If date was not inserted, we consider the current time
     if(!req.params.hasOwnProperty('date')) dateObj = new Date();
     else dateObj = new Date(date);
     
@@ -61,6 +81,6 @@ app.get('/api/:date', async function(req, res)
 
 // listen for requests :)
 
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(/*process.env.PORT*/ 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
