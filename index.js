@@ -32,7 +32,7 @@ app.get('/api', async function(req, res)
     dateObj = new Date();
     res.json(
       {
-        unix: Date.parse(dateObj),
+        unix: Date.now(),
         utc: dateObj.toUTCString()
       });
   }
